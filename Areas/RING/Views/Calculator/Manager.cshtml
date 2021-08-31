@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "計算機";
+}
+
+<style>
+
+    #content {
+        width: 400px; /*寬度*/
+        height: 100px; /*高度*/
+        font-size: 50px;
+        max-width: unset;
+    }
+
+    button {
+        width: 100px;
+        height: 100px;
+        font-size: 50px;
+        background-color: #775959;
+    }
+
+</style>
+<script>
+    var data = [];            //存放點選的數字與運算子
+    var str = "";             //將data陣列轉換為string，用於顯示
+    var curIndex = "";        //data = []的下標(下標為數組以0開始遞增)[]內為下標
+    var Qty = "";              //存運算完的結果
+
+    function onClick(v) {
+        data.length = 1;        //存入結果的長度 length能判斷data裡面有幾個數字
+        curIndex = 1;
+        data[0] = document.getElementById("content").value;//在data[0]存入結果
+        inputCount(v);
+    }
+    function inputCount(v) {
+        data[curIndex] = v.innerHTML;  //innerHTML是取得網頁內的 ID 後，即可將想要寫入的字串或 HTML Code 寫入至 ID
+        str = data.join(""); //將data陣列轉換成數字顯示在畫面上
+        curIndex++;
+        document.getElementById("content").value = str;
+    }
+  
+    function equal() {
+        var qq = eval(document.getElementById("content").value);  //eval是JavaScript eval 函數，用來執行運算
+        document.getElementById("content").value = qq.toString(); //將result轉換成字串
+        Qty = 1;
+    }
+
+    function changNull() {
+        document.getElementById("content").value = "";
+        curIndex = "";
+        data.length = ""; //length將data直接歸0
+    }
+
+</script>
+
+<table rules="all">
+    <tr>
+        <td colspan="4"><input type="text" id="content" disabled="disabled" /></td>
+    </tr>
+    <tr>
+        <td><button onclick="onClick(this)">1</button></td>
+        <td><button onclick="onClick(this)">2</button></td>
+        <td><button onclick="onClick(this)">3</button></td>
+        <td><button onclick="onClick(this)">÷</button></td>
+
+    </tr>
+
+    <tr>
+        <td><button onclick="onClick(this)">4</button></td>
+        <td><button onclick="onClick(this)">5</button></td>
+        <td><button onclick="onClick(this)">6</button></td>
+        <td><button onclick="onClick(this)">*</button></td>
+
+    </tr>
+
+    <tr>
+        <td><button onclick="onClick(this)">7</button></td>
+        <td><button onclick="onClick(this)">8</button></td>
+        <td><button onclick="onClick(this)">9</button></td>
+        <td><button onclick="onClick(this)">-</button></td>
+    </tr>
+    <tr>
+        <td><button onclick="changNull()">C</button></td>
+        <td><button onclick="onClick(this)">0</button></td>
+        <td><button onclick="equal()">=</button></td>
+        <td><button onclick="onClick(this)">+</button></td>
+    </tr>
+</table>
+

@@ -1,0 +1,185 @@
+﻿
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<style>
+    body {
+        background-color: rgba(0, 0, 0,.2);
+    }
+
+    .item_header {
+        display: flex;
+        width: 1000px;
+        margin: 0 auto;
+        height: 30px;
+        background-color: #fff;
+        border-radius: 3px;
+        padding-left: 10px;
+    }
+
+        .item_header div {
+            width: 186px;
+            color: #888;
+            line-height: 30px;
+        }
+
+        .item_header .item_detail {
+            width: 35%;
+        }
+
+    .item_body {
+        margin-top: 20px;
+        height: 100px;
+        align-items: center;
+    }
+
+    .cn {
+        text-align: center;
+    }
+
+    .ri {
+        text-align: right;
+    }
+
+    .item_detail img {
+        width: 80px;
+        height: 80px;
+        border-radius: 3px;
+        /* margin-top: 10px; */
+        float: left;
+    }
+
+    .item_detail .name {
+        margin-left: 100px;
+        margin-top: 20px;
+    }
+
+    .wh {
+        width: 20px;
+        height: 25px;
+    }
+
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #menu {
+        margin: auto;
+    }
+
+    .main {
+        background-color: #e33535;
+        color: white;
+        font-family: 微軟正黑體;
+        font-weight: bold;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center;
+        height: 35px;
+        line-height: 35px;
+        width: 100px;
+    }
+
+        .main:hover {
+            background-color: #4d4949;
+        }
+
+    .sub {
+        cursor: pointer;
+        background-color: #4d4949;
+        color: white;
+        font-family: 微軟正黑體;
+        text-align: center;
+        font-weight: bold;
+        width: 100px;
+    }
+
+        .sub li {
+            list-style-type: none;
+            line-height: 25px;
+        }
+
+    .item {
+        float: left;
+    }
+</style>
+<script>
+    $("#tabs-nav a").click(function (event) {
+
+        event.preventDefault();
+        $("#tabs-nav a").removeClass("tabs-menu-active");
+        $(this).addClass("tabs-menu-active");
+        $(".tabs-panel").hide();
+        var tab_id = $(this).data("target");
+        $("#" + tab_id).show();
+        //alert(this);
+    });
+
+ 
+    function QtyPlus() {
+        var a = 0;
+        var b = 300;
+        var c = 0;
+        if ($('#Qtys').val() != null && $('#Qtys').val() != '') {
+            a = parseInt($('#Qtys').val()) + 1;
+            c=a*b
+        }
+        $('#Qtys').val(a);
+        $('#CQtys').val(c);
+        
+    }
+
+    function QtyLess() {
+        var a = 0;
+        var b = 300;
+        if ($('#Qtys').val() > 0) {
+            if ($('#Qtys').val() != null && $('#Qtys').val() != '') {
+                a = parseInt($('#Qtys').val()) - 1;
+            }
+            $('#Qtys').val(a);
+            $('#CQtys').val(a * b);
+        } 
+    }
+
+    $(function () {
+        $("#tabs-nav a").click(function (event) {
+            event.preventDefault();
+            $("#tabs-nav a").removeClass("tabs-menu-active");
+            $(this).addClass("tabs-menu-active");
+            $(".tabs-panel").removeClass("animated-tabs bounceIn").hide();
+            var tab_id = $(this).data("target");
+            $("#" + tab_id).addClass("animated-tabs bounceIn").show();
+        });
+    });
+
+</script>
+<div id="app">
+    <div class="container">
+        <div class="item_header">
+            <div class="ri">商品</div>
+            <div class="ri">單價</div>
+            <div class="ri">數量</div>
+            <div class="ri">總計</div>
+            <div class="cn">操作</div>
+        </div>
+        <div class="item_header item_body">
+            <div class="item_detail">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmqUkOIU9pmgJOEpRNwQl9-gUhBL-O2qLOLw&usqp=CAU" />
+                <div class="name">綜合麻糬</div>
+
+            </div>
+
+            <div class="price" style="width:150px;"><span>$</span>300</div>
+            <div style="width:150px;" class="count">
+                <button class="wh" type="button" onclick="QtyLess();">-</button>
+                <input type="number" id="Qtys" style="width:40px;height:25px;" value="1" />
+                <button class="wh" type="button" onclick="QtyPlus();">+</button>
+            </div>
+            @*<div class="amount cn" id="CQtys"></div>*@
+            <input type="number" id="CQtys" style="width:40px;height:25px;" value="300" />
+            <div class="operate">
+                <button>刪除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
