@@ -155,6 +155,7 @@
 <div id="app">
     <div class="container">
         <div class="item_header">
+            @*這個也可以利用後端給的資料顯示出來 如果你要用多語系的話*@
             <div class="ri">商品</div>
             <div class="ri">單價</div>
             <div class="ri">數量</div>
@@ -164,6 +165,7 @@
         <div class="item_header item_body">
             <div class="item_detail">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmqUkOIU9pmgJOEpRNwQl9-gUhBL-O2qLOLw&usqp=CAU" />
+                @*這個name也可以從資料庫那邊抓回來 如果有好幾個產品的話就用for迴圈抓回來*@
                 <div class="name">綜合麻糬</div>
 
             </div>
@@ -175,7 +177,10 @@
                 <button class="wh" type="button" onclick="QtyPlus();">+</button>
             </div>
             @*<div class="amount cn" id="CQtys"></div>*@
-            <input type="number" id="CQtys" style="width:40px;height:25px;" value="300" />
+            @*這邊應該要用form包起來傳去後端做處理 *@
+            @*<form action="post" method="你的URL">*@
+            <input type="number" id="CQtys 這個ID可以用AJAX方式去傳 或者用上面form的方式是一樣的" style="width:40px;height:25px;" value="這個是抓到你後端資料庫傳回來的資料才對" />
+            @*</form>*@
             <div class="operate">
                 <button>刪除</button>
             </div>

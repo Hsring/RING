@@ -166,72 +166,72 @@ namespace RING.Areas.RING.Controllers.Api
             }
             return ret;
         }
-        public static int Insert(this UPGIEIP.Data.ITable table)
-        {
-            int retInt = -1;
-            //UPGIEIP.Data.Log.AddLog("Debug", "UPGIEIP.Database.Insert()", "table.TableName() = " + table.TableName());
-            if (!string.IsNullOrWhiteSpace(table.TableName()))
-            {
-                string names = "", values = "";
-                List<string> kfs = table.KeyFields();
+        //public static int Insert(this UPGIEIP.Data.ITable table)
+        //{
+        //    int retInt = -1;
+        //    //UPGIEIP.Data.Log.AddLog("Debug", "UPGIEIP.Database.Insert()", "table.TableName() = " + table.TableName());
+        //    if (!string.IsNullOrWhiteSpace(table.TableName()))
+        //    {
+        //        string names = "", values = "";
+        //        List<string> kfs = table.KeyFields();
 
-                using (System.Data.SqlClient.SqlCommand sc = Data.Database.NewSqlCommand(" SELECT TOP 0 * FROM " + table.TableName() + " WHERE 1=0 ;"))
-                {
-                    System.Data.DataTable dt = new System.Data.DataTable();
-                    using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter(sc))
-                    {
-                        sda.Fill(dt);
-                    }
-                    //UPGIEIP.Data.Log.AddLog("Debug", "UPGIEIP.Database.Insert()", sc.FillPara());
-                    if (dt.Columns.Count > 0)
-                    {
-                        try
-                        {
-                            sc.Connection.Open();
-                            foreach (System.Reflection.PropertyInfo p in table.GetType().GetProperties())
-                            {
-                                object v = p.GetValue(table, null);
-                                if (v != null
-                                    && !string.IsNullOrWhiteSpace(v.ToString())
-                                    && dt.Columns.Contains(p.Name) // 檢查資料表欄位
-                                    )
-                                {
-                                    if (!string.IsNullOrWhiteSpace(names))
-                                    {
-                                        names += ",";
-                                        values += ",";
-                                    }
-                                    names += p.Name;
-                                    values += "@" + p.Name;
-                                    sc.Parameters.Add(new System.Data.SqlClient.SqlParameter(p.Name, v));
-                                }
-                                if (kfs.Contains(p.Name))
-                                    kfs.Remove(p.Name);
-                            }
-                            sc.CommandText = "INSERT INTO " + table.TableName() + "(" + names + ") VALUES(" + values + ") ";
-                            //UPGIEIP.Data.Log.AddLog("Debug", "UPGIEIP.Database.Insert()", sc.FillPara());
-                            if (kfs.Count == 0)
-                                retInt = sc.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            ex.AddLog(sc.FillPara());
-                            throw;
-                        }
-                        finally
-                        {
-                            sc.Connection.Close();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                UPGIEIP.Data.Log.LogTypes.Error.AddLog("查無模組對應的 xxxFile 資料表");
-            }
+        //        using (System.Data.SqlClient.SqlCommand sc = Data.Database.NewSqlCommand(" SELECT TOP 0 * FROM " + table.TableName() + " WHERE 1=0 ;"))
+        //        {
+        //            System.Data.DataTable dt = new System.Data.DataTable();
+        //            using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter(sc))
+        //            {
+        //                sda.Fill(dt);
+        //            }
+        //            //UPGIEIP.Data.Log.AddLog("Debug", "UPGIEIP.Database.Insert()", sc.FillPara());
+        //            if (dt.Columns.Count > 0)
+        //            {
+        //                try
+        //                {
+        //                    sc.Connection.Open();
+        //                    foreach (System.Reflection.PropertyInfo p in table.GetType().GetProperties())
+        //                    {
+        //                        object v = p.GetValue(table, null);
+        //                        if (v != null
+        //                            && !string.IsNullOrWhiteSpace(v.ToString())
+        //                            && dt.Columns.Contains(p.Name) // 檢查資料表欄位
+        //                            )
+        //                        {
+        //                            if (!string.IsNullOrWhiteSpace(names))
+        //                            {
+        //                                names += ",";
+        //                                values += ",";
+        //                            }
+        //                            names += p.Name;
+        //                            values += "@" + p.Name;
+        //                            sc.Parameters.Add(new System.Data.SqlClient.SqlParameter(p.Name, v));
+        //                        }
+        //                        if (kfs.Contains(p.Name))
+        //                            kfs.Remove(p.Name);
+        //                    }
+        //                    sc.CommandText = "INSERT INTO " + table.TableName() + "(" + names + ") VALUES(" + values + ") ";
+        //                    //UPGIEIP.Data.Log.AddLog("Debug", "UPGIEIP.Database.Insert()", sc.FillPara());
+        //                    if (kfs.Count == 0)
+        //                        retInt = sc.ExecuteNonQuery();
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    ex.AddLog(sc.FillPara());
+        //                    throw;
+        //                }
+        //                finally
+        //                {
+        //                    sc.Connection.Close();
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        UPGIEIP.Data.Log.LogTypes.Error.AddLog("查無模組對應的 xxxFile 資料表");
+        //    }
 
-            return retInt;
-        }
+        //    return retInt;
+        //}
 
         //[System.Web.Http.HttpPost]
         //    public object Update([FromBody]Data.ExerciseTable row)
