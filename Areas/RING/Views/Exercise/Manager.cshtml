@@ -1,189 +1,74 @@
-﻿
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<style>
-    body {
-        background-color: rgba(0, 0, 0,.2);
-    }
+﻿@using Microsoft.AspNet.Identity
+@model Dictionary<string, object>
+@{
+    ViewBag.Title = "Home Page";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
 
-    .item_header {
-        display: flex;
-        width: 1000px;
-        margin: 0 auto;
-        height: 30px;
-        background-color: #fff;
-        border-radius: 3px;
-        padding-left: 10px;
-    }
-
-        .item_header div {
-            width: 186px;
-            color: #888;
-            line-height: 30px;
-        }
-
-        .item_header .item_detail {
-            width: 35%;
-        }
-
-    .item_body {
-        margin-top: 20px;
-        height: 100px;
-        align-items: center;
-    }
-
-    .cn {
-        text-align: center;
-    }
-
-    .ri {
-        text-align: right;
-    }
-
-    .item_detail img {
-        width: 80px;
-        height: 80px;
-        border-radius: 3px;
-        /* margin-top: 10px; */
-        float: left;
-    }
-
-    .item_detail .name {
-        margin-left: 100px;
-        margin-top: 20px;
-    }
-
-    .wh {
-        width: 20px;
-        height: 25px;
-    }
-
-    * {
-        margin: 0px;
-        padding: 0px;
-    }
-
-    #menu {
-        margin: auto;
-    }
-
-    .main {
-        background-color: #e33535;
-        color: white;
-        font-family: 微軟正黑體;
-        font-weight: bold;
-        font-size: 20px;
-        cursor: pointer;
-        text-align: center;
-        height: 35px;
-        line-height: 35px;
-        width: 100px;
-    }
-
-        .main:hover {
-            background-color: #4d4949;
-        }
-
-    .sub {
-        cursor: pointer;
-        background-color: #4d4949;
-        color: white;
-        font-family: 微軟正黑體;
-        text-align: center;
-        font-weight: bold;
-        width: 100px;
-    }
-
-        .sub li {
-            list-style-type: none;
-            line-height: 25px;
-        }
-
-    .item {
-        float: left;
-    }
-</style>
-<script>
-    $("#tabs-nav a").click(function (event) {
-
-        event.preventDefault();
-        $("#tabs-nav a").removeClass("tabs-menu-active");
-        $(this).addClass("tabs-menu-active");
-        $(".tabs-panel").hide();
-        var tab_id = $(this).data("target");
-        $("#" + tab_id).show();
-    });
-
- 
-    function QtyPlus() {
-        var a = 0;
-        var b = 300;
-        var c = 0;
-        if ($('#Qtys').val() != null && $('#Qtys').val() != '') {
-            a = parseInt($('#Qtys').val()) + 1;
-            c=a*b
-        }
-        $('#Qtys').val(a);
-        $('#CQtys').val(c);
-        
-    }
-
-    function QtyLess() {
-        var a = 0;
-        var b = 300;
-        if ($('#Qtys').val() > 0) {
-            if ($('#Qtys').val() != null && $('#Qtys').val() != '') {
-                a = parseInt($('#Qtys').val()) - 1;
-            }
-            $('#Qtys').val(a);
-            $('#CQtys').val(a * b);
-        } 
-    }
-
+@*<script>
+    var o = {};
+    var i = {};
     $(function () {
-        $("#tabs-nav a").click(function (event) {
-            event.preventDefault();
-            $("#tabs-nav a").removeClass("tabs-menu-active");
-            $(this).addClass("tabs-menu-active");
-            $(".tabs-panel").removeClass("animated-tabs bounceIn").hide();
-            var tab_id = $(this).data("target");
-            $("#" + tab_id).addClass("animated-tabs bounceIn").show();
-        });
+
     });
+
+    function New() {
+        $('#P_Modify').toggle();
+        $('#P_Search').hide();
+    }
 
 </script>
-<div id="app">
-    <div class="container">
-        <div class="item_header">
-            @*這個也可以利用後端給的資料顯示出來 如果你要用多語系的話*@
-            <div class="ri">商品</div>
-            <div class="ri">單價</div>
-            <div class="ri">數量</div>
-            <div class="ri">總計</div>
-            <div class="cn">操作</div>
-        </div>
-        <div class="item_header item_body">
-            <div class="item_detail">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmqUkOIU9pmgJOEpRNwQl9-gUhBL-O2qLOLw&usqp=CAU" />
-                @*這個name也可以從資料庫那邊抓回來 如果有好幾個產品的話就用for迴圈抓回來*@
-                <div class="name">綜合麻糬</div>
+<button type="button" class="btn btn-info" onclick="New();">註冊</button>
+<div id="P_Modify" style="display:none;">
+    <form method="post">
+        <table class="table-striped">
+            <tr>
+                <th>
+                    <h1>請輸入使用者資料</h1>
 
-            </div>
+                </th>
+                <td>
+                    <div>
+                        <span style="color:red">@ViewBag.Msg</span>
+                    </div>
+                </td>
+            </tr>
+            <tr><th>產品編號</th><td><input type="text" id="UserName" name="UserName" class="form-controls" /></td></tr>
+            <tr>
+                <th>帳號</th>
+                <td>
+                    <input type="text" class="form-control" id="Account" name="Account" placeholder="輸入帳號" value="">
+                    <small id="emailHelp" class="form-text text-muted">請輸入英數字</small>
+                </td>
+            </tr>
+            <tr>
+                <th>產品名稱</th>
+                <td>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">新的密碼</label>
+                        <input type="password" class="form-control" id="Password1" name="Password1" placeholder="輸入密碼" value="">
+                    </div>
+                </td>
+            </tr>
 
-            <div class="price" style="width:150px;"><span>$</span>300</div>
-            <div style="width:150px;" class="count">
-                <button class="wh" type="button" onclick="QtyLess();">-</button>
-                <input type="number" id="Qtys" style="width:40px;height:25px;" value="1" />
-                <button class="wh" type="button" onclick="QtyPlus();">+</button>
-            </div>
-            @*<div class="amount cn" id="CQtys"></div>*@
-            @*這邊應該要用form包起來傳去後端做處理 *@
-            @*<form action="post" method="你的URL">*@
-            <input type="number" id="CQtys 這個ID可以用AJAX方式去傳 或者用上面form的方式是一樣的" style="width:40px;height:25px;" value="這個是抓到你後端資料庫傳回來的資料才對" />
-            @*</form>*@
-            <div class="operate">
-                <button>刪除</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+            <tr>
+                <th>排序</th>
+                <td>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">再次確認</label>
+                        <input type="password" class="form-control" id="Password2" name="Password2" placeholder="輸入密碼" value="">
+                    </div>
+                </td>
+            </tr>
+            <tr><th>請輸入信箱</th><td><input type="text" id="Email" name="Email" class="form-controls" /></td></tr>
+            <tr>
+                <td></td>
+                <td style="text-align:right;">
+                    <button type="button" class="btn btn-secondary" onclick="hide();">取消</button>
+                    <button type="submit" class="btn btn-primary" asp-page-handler="Insert">新增</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>*@

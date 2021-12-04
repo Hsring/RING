@@ -7,11 +7,11 @@ namespace RING.Areas.RING.Data
 {
     public class ExerciseTable
     {
-        public string ID { get; set; }
-        public string Name { get; set; }
-        public int? Qty { get; set; }
-        public DateTime? Date { get; set; }
-
-
+        public string Id { get; set; }
+        public string Account { get; set; }
+        public string Password1 { get; set; }
+        public string Password2 { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
     }
 }

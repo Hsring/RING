@@ -24,6 +24,8 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("首頁", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
+                    <li>@Html.ActionLink("測試註冊", "Register", "Register")</li>
+                    <li>@Html.ActionLink("測試登入", "Login", "Login")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -40,6 +42,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

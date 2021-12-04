@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Web.Http;
+using Newtonsoft.Json;
+using System.Data;
 
 namespace RING.Areas.RING.Controllers
 {
@@ -20,8 +22,7 @@ namespace RING.Areas.RING.Controllers
                 {
                     sc.Connection.Open();
                     sc.CommandText = @"SELECT *
-                                       FROM modOpen
-                                       ORDER BY Name ;";
+                                       FROM UserRegister;";
                     sc.ExecuteReader();
                     
                 }
@@ -47,24 +48,23 @@ namespace RING.Areas.RING.Controllers.Api
             try
             {
 
-                if (!string.IsNullOrWhiteSpace(row.Name))
+                if (!string.IsNullOrWhiteSpace(row.Account)&& !string.IsNullOrWhiteSpace(row.Password1) && !string.IsNullOrWhiteSpace(row.Email))
                 {
-                    row.ID = Guid.NewGuid().ToString().ToLower();
                     using (SqlCommand sc = new SqlCommand("", new SqlConnection(
                          System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Exercise"].ConnectionString)))
                     {
                         try
                         {
                             sc.Connection.Open();
+                            sc.CommandText = "INSERT INTO MochiProduct(Id,Account,Password1,Password2,UserName,Email)VALUES(@Id,@Account,@Password1,@Password2,@UserName,@Email)";
+                            sc.Parameters.Add(new SqlParameter("Id", Guid.NewGuid().ToString().ToLower()));
+                            sc.Parameters.Add(new SqlParameter("Account", row.Account));
+                            sc.Parameters.Add(new SqlParameter("Password1",row.Password1));
+                            sc.Parameters.Add(new SqlParameter("Password2", row.Password2));
+                            sc.Parameters.Add(new SqlParameter("UserName", row.UserName));
+                            sc.Parameters.Add(new SqlParameter("Email", row.Email));
 
-                            sc.CommandText =
-                             @" INSERT INTO modOpen(ID,Name)
-                            VALUES ('" + row.ID + "','" + row.Name + "') ";
-
-                            var dr = sc.ExecuteNonQuery();
-
-
-
+                            sc.ExecuteNonQuery();
                         }
                         finally
                         {
@@ -81,91 +81,6 @@ namespace RING.Areas.RING.Controllers.Api
             return ret;
         }
 
-        //[System.Web.Http.HttpPost]
-        //public object Update([FromBody]Data.ExerciseTable row)
-        //{
-        //    object ret = new Data.ExerciseTable() { };
-        //    List<Data.ExerciseTable> rows = new List<Data.ExerciseTable>();
-        //    try
-        //    {
-
-        //        if (!string.IsNullOrWhiteSpace(row.Name))
-        //        {
-        //            using (SqlCommand sc = new SqlCommand("", new SqlConnection(
-        //                 System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Exercise"].ConnectionString)))
-        //            {
-        //                try
-        //                {
-        //                    sc.Connection.Open();
-
-        //                    sc.CommandText =
-        //                     @" UPDATE modOpen
-        //                        SELECT Name='CCC'
-        //                        WHERE Name='BBB' ";
-
-        //                    var dr = sc.ExecuteNonQuery();
-
-
-
-        //                }
-        //                finally
-        //                {
-        //                    sc.Connection.Close();
-        //                } // ret= sc;
-        //            }
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ret = ex.ToString();
-        //    }
-        //    return ret;
-        //}
-        public object Search([FromBody]Data.ExerciseTable row)
-        {
-            var ret = new Data.ExerciseTable() { };
-            List<Data.ExerciseTable> rows = new List<Data.ExerciseTable>();
-            if (!string.IsNullOrWhiteSpace(row.ID))
-            {
-                using (SqlCommand sc = new SqlCommand("", new SqlConnection(
-                         System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Exercise"].ConnectionString)))
-                {
-                    sc.Connection.Open();
-                    try
-                    {
-                        sc.CommandText = @"
-                                 SELECT A.*
-                                 FROM modOpen  A
-                                 ORDER BY  A.ID;";
-
-                        sc.Parameters.Add(new System.Data.SqlClient.SqlParameter("ID", row.ID));
-                        // UPGIEIP.Data.Log.LogTypes.Debug.AddLog(sc.FillPara());
-
-                        using (SqlDataReader dr = sc.ExecuteReader())
-                        {
-                            while (dr.Read())
-                            {
-                                Data.ExerciseTable m = new Data.ExerciseTable();
-                                rows.Add(m);
-                            }
-                        }
-
-                        //ret.Data = rows;
-                    }
-                    catch (Exception ex)
-                    {
-                        //ex.AddLog(sc.FillPara());
-                        //ret = ex.ToString();
-                    }
-                    finally
-                    {
-                        sc.Connection.Close();
-                    }
-                }
-            }
-            return ret;
-        }
         //public static int Insert(this UPGIEIP.Data.ITable table)
         //{
         //    int retInt = -1;

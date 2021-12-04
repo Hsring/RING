@@ -1,0 +1,96 @@
+﻿@section scripts {
+    <script language="javascript">
+        var VuePage = new Vue({
+            el: '#VuePage'
+            , data: function () {
+                var data = {
+                    form: {}
+                };
+                return data;
+            }
+            , methods: {
+                RegisterIN: function () {
+                    var self = this;
+
+                    var postData = {};
+                    postData['Password'] = self.form.Password;
+                    postData['Email'] = self.form.Email;
+                    email(self.form.Email);
+                    $.ajax({
+                        url:'@Url.Content("~/Register/RegisterIN")',
+                        method:'POST',
+                        dataType:'json',
+                        data: { row: postData },
+                        success: function (datas) {
+                            if (datas.Error) {
+                                alert(datas.Error);
+                                return;
+                            }
+                            alert(datas.ResultOk);
+                        },
+                        error: function (err) {
+                            $('#ErrorMsg').html(err.responseText);
+                            $('#ErrorAlert').modal('toggle');
+                        },
+                    });
+                }
+            }
+        })
+        //function email() {
+        //    var email = $('#Email').val();
+        //    if (email == '') {
+        //        alert('請輸入電子信箱');
+        //        $('#vote_email').focus();
+        //        return false;
+        //    } else {
+        //        var myreg = '[-0-9a-zA-Z.+_]+@@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}';
+        //        if (myreg.test(email) != true) {
+        //            alert('電子信箱格式錯誤');
+        //            $('#vote_email').focus();
+        //            $('#vote_email').select();
+        //            return false;
+        //        }
+        //    }
+        //}
+       // function email()
+       //{
+       //     var temp = $('#Email').val();
+
+       //     var myreg = '[-0-9a-zA-Z.+_]+@@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}';
+       //   if(myreg.test(temp) == false)
+       //   {
+       //        alert('提示\n\n請輸入有效的E_mail！');
+       //   }
+       // }
+        function email(remail) {
+            if (email == '') {
+                alert('請輸入電子信箱');
+
+            } else {
+                if (remail.search(/^[\w-]+(\.[\w-]+)*@@[\w-]+(\.[\w-]+)+$/) == -1) {
+                    alert("Email格式錯誤！");
+                }
+            }
+        }
+    </script>
+}
+
+<div id="VuePage">
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Email</label>
+                <form action="#" method="post" name="myForm">
+                    <input type="text" id="Emai1" name="email" class="form-control" v-model="form.Email" >
+                </form>
+                    </div>
+            <div class="form-group">
+                <label>密碼</label>
+                <input type="password" class="form-control" v-model="form.Password" onchange="email(document.myForm.email.value);">
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button"  class="btn btn-primary"   v-on:click="RegisterIN();" >註冊</button>
+        </div>
+    </div>
+</div>

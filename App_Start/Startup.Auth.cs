@@ -83,11 +83,11 @@ namespace RING
             //    appId: "",
             //    appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "420915000125-cslcdne5fq100vbi6h6lvei4d3kjkge6.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }

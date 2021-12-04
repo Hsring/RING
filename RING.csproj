@@ -219,7 +219,11 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Areas\RING\Controllers\CalculatorController.cs" />
     <Compile Include="Areas\RING\Controllers\ExerciseController.cs" />
+    <Compile Include="Areas\RING\Controllers\LoginController.cs" />
+    <Compile Include="Areas\RING\Controllers\RegisterController.cs" />
     <Compile Include="Areas\RING\Data\ExerciseTable.cs" />
+    <Compile Include="Areas\RING\Data\LoginTable.cs" />
+    <Compile Include="Areas\RING\Data\RegisterTable.cs" />
     <Compile Include="Areas\RING\RINGAreaRegistration.cs" />
     <Compile Include="Areas\RING\ValuesController1.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -344,6 +348,8 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Views\Register\Register.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -482,6 +488,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\RING\img\" />
+    <Folder Include="Areas\RING\Views\Login\" />
     <Folder Include="web\" />
   </ItemGroup>
   <ItemGroup>
